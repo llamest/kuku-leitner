@@ -19,7 +19,6 @@ body {
 .logo {
   display: grid; place-items: center; width: 46px; height: 46px;
   border-radius: 15px; background: var(--green); color: white; font-size: 34px;
-  line-height: 1;
 }
 main { max-width: 760px; margin: 0 auto; padding: 0 20px 24px; }
 .card {
@@ -137,4 +136,14 @@ footer {
 }
 @media (prefers-reduced-motion: no-preference) {
   button { transition: background .12s ease; }
+}
+/* 九九の唱え方 */
+.reading {
+  margin: -14px 0 24px;
+  text-align: center;
+  font-size: clamp(20px, 4.5vw, 26px);
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--muted);
+  overflow-wrap: anywhere;
 }
