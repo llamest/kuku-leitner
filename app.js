@@ -439,12 +439,37 @@
       '予定日前の追加練習ではクラスは変わりません。</p></section>';
   }
 
-   function quizHTML() {
+     function quizHTML() {
     const s = state.session;
     const item = s.items[s.index];
     const q = BY_ID[item.id];
     const r = item.result;
     const card = state.cards[q.id];
+
+    const answerArea = r ?
+      '<div class="feedback' + (r.correct ? "" : " wrong") +
+      '" role="status"><b>' +
+      (r.correct ? "○ せいかい！" : "もう一度、覚えよう") +
+      '</b>' +
+      (r.correct ?
+        '<p>正解は <strong>' + q.answer + '</strong></p>' :
+        '<p>選んだ答え：<strong>' + r.selected +
+        '</strong><br>正解：<strong>' + q.answer + '</strong></p>') +
+      '<p class="muted">' +
+      (r.regular ?
+        label(r.before) + ' → ' + r.after +
+        ' ／ 次の復習：' + niceDate(r.due) :
+        '追加練習：クラスと復習予定日は変わりません。') +
+      '</p></div><div class="actions">' +
+      button("next", s.index === 9 ? "結果を見る" : "次の問題へ") +
+      '</div>' :
+      '<div class="choices">' +
+      item.choices.map(n =>
+        '<button class="choice" data-answer="' + n + '"' +
+        (busy || pending ? " disabled" : "") +
+        ' aria-label="' + n + '">' + n + '</button>'
+      ).join("") +
+      '</div><p class="muted">正しい答えを、1つ選んでね。</p>';
 
     return '<section class="card"><div class="topline"><b>' +
       (s.index + 1) + ' / 10 問</b>' +
@@ -460,35 +485,8 @@
       q.a + ' × ' + q.b + ' = ' + (r ? q.answer : "?") +
       '</h1><p class="reading">' +
       (r ? q.readingAfter : q.readingBefore) +
-      '</p><div class="choices">' +
-      item.choices.map(n => {
-        let cls = "";
-        if (r && n === q.answer) cls = " correct";
-        if (r && n === r.selected && !r.correct) cls = " wrong";
-
-        return '<button class="choice' + cls +
-          '" data-answer="' + n + '"' +
-          (r || busy || pending ? " disabled" : "") +
-          ' aria-label="' + n +
-          (r && n === q.answer ? "、正解" : "") +
-          '">' + n + '</button>';
-      }).join("") +
-      '</div>' +
-      (r ?
-        '<div class="feedback' + (r.correct ? "" : " wrong") +
-        '" role="status"><b>' +
-        (r.correct ? "○ せいかい！" : "もう一度、覚えよう") +
-        '</b><p>正解は <strong>' + q.answer +
-        '</strong></p><p class="muted">' +
-        (r.regular ?
-          label(r.before) + ' → ' + r.after +
-          ' ／ 次の復習：' + niceDate(r.due) :
-          '追加練習：クラスと復習予定日は変わりません。') +
-        '</p></div><div class="actions">' +
-        button("next", s.index === 9 ? "結果を見る" : "次の問題へ") +
-        '</div>' :
-        '<p class="muted">正しい答えを、1つ選んでね。</p>') +
-      '</section>';
+      '</p><div class="answer-area">' + answerArea +
+      '</div></section>';
   }
 
   function resultHTML() {

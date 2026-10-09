@@ -147,3 +147,21 @@ footer {
   color: var(--muted);
   overflow-wrap: anywhere;
 }
+
+/* 四択と回答結果を同じ領域に表示する */
+.answer-area {
+  min-height: 280px;
+}
+
+.answer-area .feedback {
+  margin-top: 0;
+  padding: 16px;
+}
+
+.answer-area .feedback p {
+  margin: 8px 0 0;
+}
+
+.answer-area .actions {
+  margin-top: 16px;
+}
