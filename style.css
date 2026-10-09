@@ -19,6 +19,7 @@ body {
 .logo {
   display: grid; place-items: center; width: 46px; height: 46px;
   border-radius: 15px; background: var(--green); color: white; font-size: 34px;
+  line-height: 1;
 }
 main { max-width: 760px; margin: 0 auto; padding: 0 20px 24px; }
 .card {
