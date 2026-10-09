@@ -439,7 +439,7 @@
       '予定日前の追加練習ではクラスは変わりません。</p></section>';
   }
 
-     function quizHTML() {
+  function quizHTML() {
     const s = state.session;
     const item = s.items[s.index];
     const q = BY_ID[item.id];
